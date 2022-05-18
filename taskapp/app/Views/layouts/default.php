@@ -23,6 +23,7 @@
             <a href="<?= site_url('/admin/users') ?>">Show Users</a>
         <?php endif; ?>
         <a href="<?=site_url('/tasks') ?>">Tasks</a>
+        <a href="<?= site_url('/profile/show') ?>">My Profile</a>
         <a href="<?= site_url('/logout') ?>">Logout</a>
     <?php else: ?>
 
