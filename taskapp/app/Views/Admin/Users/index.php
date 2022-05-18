@@ -14,6 +14,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Active</th>
                     <th>Administrator</th>
                     <th>Created At</th>
                 </tr>
@@ -25,6 +26,7 @@
                             <a href="<?=site_url("/admin/users/show/" .  $user->id)?>"><?= esc($user->name) ?></a>
                         </td>
                         <td><?= esc($user->email) ?></td>
+                        <td><?= $user->is_active ? "Yes" : "No" ?></td>
                         <td><?= $user->is_admin ? "Yes" : 'No' ?></td>
                         <td><?= $user->created_at ?></td>
                     </tr>

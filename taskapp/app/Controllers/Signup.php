@@ -16,6 +16,9 @@ class Signup extends BaseController
         $user->startActivation();
 
         if($model->insert($user)){
+
+            $this->sendActiviationEmail($user);
+
             return redirect()->to('/signup/success');
         }
         else{
@@ -29,4 +32,28 @@ class Signup extends BaseController
     public function success(){
         return view('Signup/success');
     }
+
+    public function activate($token){
+        $model = new \App\Models\UserModel;
+
+        $model->activateByToken($token);
+
+        return view('Signup/activated');
+    }
+
+    private function sendActiviationEmail($user){
+        $email = service('email');
+
+        $email->setTo($user->email);
+
+        $email->setSubject('Account Activation');
+
+        $message = view('Signup/activation_email', ['token' => $user->token]);
+
+        $email->setMessage($message);
+
+        $email->send();
+    }
+
+    
 }

@@ -25,7 +25,7 @@ class Home extends BaseController
             echo "Email sent";
         }
         else{
-            echo "Email not sent";
+            echo $email->printDebugger();
         }
     }
 }

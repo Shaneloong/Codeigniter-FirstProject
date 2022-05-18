@@ -15,6 +15,9 @@
         <dt>Administrator</dt>
         <dd><?= $user->is_admin ? "Yes" : "No" ?></dd>
 
+        <dt>Active</dt>
+        <dd><?= $user->is_active ? "Yes" : "No" ?></dd>
+
         <dt>Created at</dt>
         <dd><?= $user->created_at ?></dd>
 

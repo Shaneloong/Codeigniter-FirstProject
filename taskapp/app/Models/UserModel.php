@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Libraries\Token;
+
 class UserModel extends \CodeIgniter\Model{
     protected $table = 'user';
 
-    protected $allowedFields = ['name', 'email', 'password', 'activation_hash'];
+    protected $allowedFields = ['name', 'email', 'password', 'activation_hash', 'reset_hash', 'reset_expires_at'];
 
     protected $returnType = 'App\Entities\User';
 
@@ -50,5 +52,37 @@ class UserModel extends \CodeIgniter\Model{
     public function disablePasswordValidation(){
         unset($this->validationRules['password']);
         unset($this->validationRules['password_confirmation']);
+    }
+
+    public function activateByToken($token){
+
+        $token = new Token($token);
+
+        $token_hash = $token->getHash();
+
+        $user = $this->where('activation_hash', $token_hash)
+                        ->first();
+
+        if($user !== null){
+            $user->activate();
+            $this->protect(false)->save($user);
+        }
+    }
+
+    public function getUserForPasswordReset($token){
+        $token = new Token($token);
+
+        $token_hash = $token->getHash();
+
+        $user = $this->where('reset_hash', $token_hash)
+                        ->first();
+
+        if($user){
+            if($user ->reset_expires_at < date('Y-m-d H:i:s')){
+                $user = null;
+            }
+        }
+        
+        return $user;
     }
 }

@@ -20,7 +20,7 @@
 
         <div>
             <button class="btn btn-primary">Login</button>
-            <a href="<?= site_url("/") ?>" class="btn btn-primary">Cancel</a>
+            <a href="<?= site_url("/password/forgot") ?>" class="">Forgot Password</a>
         </div>
 
 
