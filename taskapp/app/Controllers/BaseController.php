@@ -37,6 +37,8 @@ class BaseController extends Controller
      */
     protected $helpers = ["form", 'auth'];
 
+    protected $locale;
+
     /**
      * Constructor.
      */
@@ -44,6 +46,20 @@ class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
+
+        $session = session();
+
+        if($session->has('locale')){
+            $this->locale = $session->get('locale');
+        }
+        else{
+            $this->locale = $this->request->getLocale();
+        }
+
+        $this->request->setLocale($this->locale);
+        
+        $view = service('renderer');
+        $view->setVar('locale', $this->locale);
 
         // Preload any models, libraries, etc, here.
 

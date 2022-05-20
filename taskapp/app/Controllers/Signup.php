@@ -19,12 +19,12 @@ class Signup extends BaseController
 
             $this->sendActiviationEmail($user);
 
-            return redirect()->to('/signup/success');
+            return redirect()->to("/{$this->locale}/signup/success");
         }
         else{
             return redirect()->back()
                             ->with('errors', $model->errors())
-                            ->with('warning', 'Invalid Data')
+                            ->with('warning', lang('App.messages.invalid'))
                             ->withInput();
         }
     }
@@ -46,7 +46,7 @@ class Signup extends BaseController
 
         $email->setTo($user->email);
 
-        $email->setSubject('Account Activation');
+        $email->setSubject(lang('Signup.activation'));
 
         $message = view('Signup/activation_email', ['token' => $user->token]);
 

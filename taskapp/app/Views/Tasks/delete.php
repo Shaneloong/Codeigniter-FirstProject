@@ -3,11 +3,17 @@
 <?= $this->section('title') ?> Delete Task <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <h1>Delete Task </h1> 
+    <h1 class="title">Delete Task </h1> 
     <p>Are you sure?</p>
 
     <?= form_open("/tasks/delete/". $task->id) ?>
-        <button class="btn btn-primary">Yes</button>
-        <a href="<?= site_url('tasks/show/' . $task->id) ?>">No</a>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary">Yes</button>
+            </div>
+            <div class="control">
+                <a class="button" href="<?= site_url('tasks/show/' . $task->id) ?>">No</a>
+            </div>
+        </div>
     </form>
 <?= $this->endSection() ?>

@@ -1,28 +1,34 @@
-<div>
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" value="<?= old('name', esc($user->name)) ?>">
+<div class="field">
+    <label class="label" for="name">Name</label>
+    <div class="control">
+        <input class="input" type="text" name="name" id="name" value="<?= old('name', esc($user->name)) ?>">
+    </div>
 </div>
 
-<div>
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" value="<?= old('email', esc($user->email)) ?>">
+<div class="field">
+    <label class="label" for="email">Email</label>
+    <input class="input" type="email" name="email" id="email" value="<?= old('email', esc($user->email)) ?>">
 </div>
 
-<div>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" value="">
+<div class="field">
+    <label class="label" for="password">Password</label>
+    <div class="control">
+        <input class="input" type="password" name="password" id="password" value="">
+    </div>
     <?php if($user->id): ?>
-    <p>Leave Blank to keep existing password</p>
+    <p class="help">Leave Blank to keep existing password</p>
     <?php endif; ?>
 </div>
 
-<div>
-    <label for="password_confirmation">Password Confirmation</label>
-    <input type="password" name="password_confirmation" id="password_confirmation" value="">
+<div class="field">
+    <label class="label" for="password_confirmation">Password Confirmation</label>
+    <div class="control">
+        <input class="input" type="password" name="password_confirmation" id="password_confirmation" value="">
+    </div>
 </div>
 
-<div>
-    <label for="is_active">
+<div class="field">
+    <label class="checkbox" for="is_active">
         <?php if($user->id == current_user()->id): ?>
             <input type="checkbox" checked disabled> Active
         <?php else: ?>
@@ -33,8 +39,8 @@
     </label>
 </div>
 
-<div>
-    <label for="is_admin">
+<div class="field">
+    <label class="checkbox" for="is_admin">
         <?php if($user->id == current_user()->id): ?>
             <input type="checkbox" checked disabled> Administrator
         <?php else: ?>

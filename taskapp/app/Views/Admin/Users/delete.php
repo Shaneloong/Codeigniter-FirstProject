@@ -3,7 +3,7 @@
 <?= $this->section('title') ?> Delete User <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <h1>Delete User </h1> 
+    <h1 class="title">Delete User </h1> 
     <p>Are you sure?</p>
 
     <?= form_open("/admin/users/delete/". $user->id) ?>

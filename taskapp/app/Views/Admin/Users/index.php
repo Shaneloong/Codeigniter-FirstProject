@@ -4,9 +4,9 @@
 
 <?= $this->section("content") ?>
     
-    <h1>Users</h1>
+    <h1 class="title">Users</h1>
 
-    <a href="<?= site_url("/admin/users/new") ?>">Create New Users</a>
+    <a class="button is-link" href="<?= site_url("/admin/users/new") ?>">Create New Users</a>
 
     <?php if($users): ?>
         <table class="table table-hover">
@@ -28,13 +28,13 @@
                         <td><?= esc($user->email) ?></td>
                         <td><?= $user->is_active ? "Yes" : "No" ?></td>
                         <td><?= $user->is_admin ? "Yes" : 'No' ?></td>
-                        <td><?= $user->created_at ?></td>
+                        <td><?= $user->created_at->humanize() ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
             
             </table>
-        <?= $pager->links() ?>
+        <?= $pager->simpleLinks() ?>
 
     <?php else: ?>
 

@@ -3,7 +3,7 @@
 <?= $this->section('title') ?> Edit User <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <h1>Edit User</h1>
+    <h1 class="title">Edit User</h1>
     <?php if (session()->has('errors')): ?>
         <ul>
             <?php foreach (session('errors') as $error): ?>

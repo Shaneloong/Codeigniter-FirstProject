@@ -4,8 +4,20 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index()
+    public function index($locale = '')
     {
+        if($locale === ''){
+
+            session()->keepFlashdata('info');
+
+            return redirect()->to($this->locale); // redirect to the home page with a locale
+
+        }
+
+        $this->request->setLocale($locale);
+        
+        session()->set('locale', $locale);
+
         // echo view("Header");
         // helper('auth');
         return view('Home/index');

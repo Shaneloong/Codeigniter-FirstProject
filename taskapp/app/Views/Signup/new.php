@@ -1,40 +1,62 @@
 <?= $this->extend('layouts/default') ?> 
 
-<?= $this->section('title') ?> Sign Up <?= $this->endSection() ?>
+<?= $this->section('title') ?> <?= lang('Signup.title')?> <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <h1>Signup</h1>
+    <h1 class="title"><?= lang('Signup.title')?></h1>
     <?php if (session()->has('errors')): ?>
-        <ul>
+        <ul class="notification is-danger is-light">
+            <button class="delete"></button>
             <?php foreach (session('errors') as $error): ?>
-                <li style="color: red;"><?= $error ?></li>
+                <li><?= $error ?></li>
             <?php endforeach ?>  
         </ul>
     <?php endif ?>
-    <?= form_open("/Signup/create") ?>
-        <div>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= old('name') ?>">
+
+    <div class="container">
+
+
+    <?= form_open("/{$locale}/signup/create") ?>
+        <div class="field">
+            <label class="label" for="name"><?= lang('Signup.name') ?></label>
+            <div class="control">
+                <input class="input" type="text" name="name" id="name" value="<?= old('name') ?>">
+            </div>
         </div>
 
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="<?= old('email') ?>">
+        <div class="field">
+            <label class="label" for="email"><?= lang('Signup.email') ?></label>
+            <div class="control">
+                <input class="input" type="email" name="email" id="email" value="<?= old('email') ?>">
+            </div>
+
         </div>
 
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" value="">
+        <div class="field">
+            <label class="label" for="password"><?= lang('Signup.password') ?></label>
+            <div class="control">
+                <input class="input" type="password" name="password" id="password" value="">
+            </div>
+            
         </div>
         
-        <div>
-            <label for="password_confirmation">Password Confirmation</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" value="">
+        <div class="field">
+            <label class="label" for="password_confirmation"><?= lang('Signup.password_confirmation') ?></label>
+            <div class="control">
+                <input class="input" type="password" name="password_confirmation" id="password_confirmation" value="">
+            </div>
         </div>
         
-
-    <button class="btn btn-primary">Sign up</button>
-    <a href="<?= site_url("/") ?>" class="btn btn-primary">Cancel</a>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary"><?= lang('Signup.signup') ?></button>
+            </div>
+            <div class="control">
+                <a href="<?= site_url("/") ?>" class="button"><?= lang('Signup.cancel') ?></a>
+            </div>
+            
+        </div>
 
     </form>
+    </div>
 <?= $this->endSection() ?>

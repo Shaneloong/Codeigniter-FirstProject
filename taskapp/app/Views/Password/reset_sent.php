@@ -1,9 +1,9 @@
 <?= $this-> extend('layouts/default') ?> 
 
-<?= $this->section('title') ?> Password Reset <?= $this->endSection() ?> 
+<?= $this->section('title') ?> <?= lang('Password.title_reset') ?> <?= $this->endSection() ?> 
 
 <?= $this->section('content') ?> 
-    <h1>Password Reset</h1>
+    <h1 class="title"><?= lang('Password.title_reset') ?></h1>
 
-    <p>Password reset requested. Please check your email.</p>
+    <p><?= lang('Password.reset_requested') ?></p>
 <?= $this->endSection() ?> 

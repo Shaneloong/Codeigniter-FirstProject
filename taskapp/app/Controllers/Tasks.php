@@ -111,6 +111,14 @@ class Tasks extends BaseController
 
         return view('Tasks/delete', ['task' => $task]);
     }
+
+    public function search(){
+        $tasks = $this->model->search($this->request->getGet('q'), $this->current_user->id);
+
+        return $this->response->setJSON($tasks);
+    }
+
+
     private function getTaskOr404($id){
 
         $task = $this->model->getTaskByUserId($id, $this->current_user->id); // this will return null if the task is not found

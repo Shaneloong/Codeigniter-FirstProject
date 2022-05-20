@@ -2,11 +2,15 @@
 
 namespace App\Libraries;
 
+use PhpParser\Node\Expr\FuncCall;
+
+use App\Models\RememberedLoginModel;
+
 class Authentication {
 
     private $user;
 
-    public function login ($email, $password){
+    public function login ($email, $password, $remember_me){
         $model = new \App\Models\UserModel;
 
         $user = $model->findByEmail($email);
@@ -21,36 +25,105 @@ class Authentication {
         if(! $user->is_active){
             return false;
         }
-        $session = \Config\Services::session();
-        $session->regenerate();
-        $session->set('user_id', $user->id);
+
+        $this->logInUser($user);
+
+        if($remember_me){
+            $this->rememberLogin($user->id);
+        }
 
         return true;
     }
 
+    private function logInUser($user){
+        $session = \Config\Services::session();
+        $session->regenerate();
+        $session->set('user_id', $user->id);
+    }
+
+    private function rememberLogin($user_id){
+        
+        $model = new RememberedLoginModel;
+
+        list($token, $expiry) = $model->rememberUserLogin($user_id);
+
+        $response = service('response');
+
+        $response->setCookie('remember_me', $token, $expiry);
+    }
+
     public function logout(){
+
+        $token = service('request')->getCookie('remember_me');
+
+        if($token !== null){
+            $model = new \App\Models\RememberedLoginModel;
+
+            $model->deleteByToken($token);
+
+
+        }
+
+        service('response')->deleteCookie('remember_me');
+
         session()->destroy();
     }
 
-    public function getCurrentUser(){
-
+    private function getUserFromSession(){
         if(! session()->has('user_id') ){
             return null;
         }
 
-        if($this->user === null){
-            $model = new \App\Models\UserModel;
-            $user =  $model->find(session()->get('user_id'));
+        $model = new \App\Models\UserModel;
+        $user =  $model->find(session()->get('user_id'));
 
-            if($user && $user->is_active){
-                $this->user = $user;
-            }
+        if($user && $user->is_active){
+            return $user;
+        }
+    }
+
+    private function getUserFromRememberCookie(){
+        $request = service('request');
+
+        $token = $request->getCookie('remember_me');
+
+        if($token === null){
+            return null;
         }
 
+        $remembered_login_model = new \App\Models\RememberedLoginModel;
+
+        $remember_login = $remembered_login_model->findByToken($token);
+
+        if($remember_login === null){
+            return null;
+        }
+
+        $user_model = new \App\Models\UserModel;
+
+        $user = $user_model ->find($remember_login['user_id']);
+
+        if($user && $user->is_active){
+            $this->logInUser($user);
+
+            return $user;
+        }
+    }
+
+    public function getCurrentUser(){
+
+        if($this->user === null){
+            $this->user = $this->getUserFromSession();
+        }
+        if($this->user === null){
+            $this->user = $this->getUserFromRememberCookie();
+        }
         return $this->user;
     }
 
     public function isLoggedIn(){
         return $this->getCurrentUser() !== null;
     }
+
+
 }
