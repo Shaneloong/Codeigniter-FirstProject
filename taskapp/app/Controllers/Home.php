@@ -17,7 +17,7 @@ class Home extends BaseController
         $this->request->setLocale($locale);
         
         session()->set('locale', $locale);
-
+  
         // echo view("Header");
         // helper('auth');
         return view('Home/index');
@@ -34,10 +34,14 @@ class Home extends BaseController
         $email->setMessage('<h1>Hello World</h1>');
 
         if($email->send()){
+
             echo "Email sent";
+
         }
         else{
+
             echo $email->printDebugger();
+
         }
     }
 }

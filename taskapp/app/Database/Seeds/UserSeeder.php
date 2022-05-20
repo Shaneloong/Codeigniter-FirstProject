@@ -22,6 +22,5 @@ class UserSeeder extends Seeder
                 ->protect(false)
                 ->insert($data); 
 
-        dd($model->errors);
     }
 }
